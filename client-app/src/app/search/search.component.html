@@ -1,0 +1,92 @@
+<div>
+<div class="container-fluid my-5 py-md-1 text-center">
+    
+    <div class="row justify-content-center mb-4">
+        <h1 class="stock-search-header">STOCK SEARCH</h1>
+    </div>
+
+    <div class="row justify-content-center">
+        <form action="" autocomplete="off" (ngSubmit)="getStockSearchResultFromAPI()">
+            
+            <div class="input-group search-input mx-auto">
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="stock-search-input" 
+                    placeholder="Enter stock ticker symbol" 
+                    aria-label="Enter stock ticker symbol"
+                    matInput
+                    [matAutocomplete]="auto"
+                    [(ngModel)]="tickerSymbol"
+                    [formControl]="searchFormControl"
+                    name="stock-search-input"
+                    
+                >
+                <!-- (keyup)="getDataForAutocomplete($event)" -->
+
+                <!-- search and cancel buttons -->
+                <button class="btn btn-outline-secondary" id="stock-search-button" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="fill:#2b2aac" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+                <button class="btn btn-outline-secondary" id="stock-cancel-button" type="button" (click)="cancelSearch()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="fill:#2b2aac" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                        <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                    </svg>
+                </button>
+
+                <!-- material autocomplete -->
+                <mat-autocomplete #auto="matAutocomplete" (keyup)="keyPress($event)">
+                    <mat-option *ngIf="showSpinner">
+                        <mat-progress-spinner mode="indeterminate" [diameter]="30"></mat-progress-spinner>
+                    </mat-option>
+                    
+                    <mat-option (keyup)="keyPress($event)" [ngClass]="{'disabled-field': showSpinner}" *ngFor="let option of options" [value]="option.displaySymbol" (click)="getDataFromApiOnAutocomplete(option)">
+                        <span  style="font-size:1.5em">{{option.displaySymbol}}</span> {{ " | " + option.description}}
+                    </mat-option>
+                
+                </mat-autocomplete>
+
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- toasts -->
+<div class="container-fluid my-md-5 py-md-1 text-center w-75 fs-6" *ngIf="noTickerEntered">
+    <ngb-alert [type]="'danger'" (closed)="noTickerEnteredAltertClosed()">{{ noTickerEnteredAlertMessage }}</ngb-alert>
+</div>
+<div class="container-fluid my-md-5 py-md-1 text-center w-75 fs-6" *ngIf="notValidTicker">
+    <ngb-alert [type]="'danger'" [dismissible]="false" style="color:black">{{ notValidTickerAlertMessage }}</ngb-alert>
+</div>
+<div class="container-fluid my-md-5 py-md-1 text-center w-75 fs-6" *ngIf="isAPIResponseExeeded">
+    <ngb-alert [type]="'danger'" [dismissible]="false">{{ isAPIResponseExeededMessage }}</ngb-alert>
+</div>
+
+<div class="container-fluid my-md-5 py-md-1 text-center w-75 fs-6 d-flex justify-content-center align-items-center" *ngIf="showMainPageSpinner">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<app-search-result 
+    *ngIf="displayResult" 
+    [companyProfile]="companyProfile" 
+    [quote]="quote" 
+    [peers]="peers" 
+    [news]="news" 
+    [candle]="candle"
+    [stockCurrentTime]="stockCurrentTime"  
+    [isMarketOpen]="isMarketOpen"
+    [marketMsg]="marketMsg" 
+    [priceChange]="priceChange" 
+    [allmention]="allmentions"  
+    (peersClickedEmitter)="childsPeersClicked($event)"
+    [candleForTwoYears]="candleForTwoYears"
+    [recommendation]="recommendation"
+    [earnings]="earnings"
+>
+</app-search-result>
+
+</div>

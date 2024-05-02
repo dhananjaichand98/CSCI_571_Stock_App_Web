@@ -1,0 +1,32 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+* {
+    font-family: sans-serif !important;
+}
+
+.app-root-class {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-background::before {
+    content: '';
+    background: white;
+    background-image: url('assets/img/background-graph.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.2;
+    width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    z-index: -1;
+}
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

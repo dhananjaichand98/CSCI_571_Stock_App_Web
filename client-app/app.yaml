@@ -1,0 +1,11 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+service: client-app
+handlers:
+  - url: /(.*\.(js|css|svg|png|jpg)(|\.map))$
+    static_files: dist/client-app/\1
+    upload: dist/client-app/(.*)(|\.map)
+  - url: /.*
+    static_files: dist/client-app/index.html
+    upload: dist/.*

@@ -1,0 +1,78 @@
+<div class="search">
+    <div class="row" style="margin:0">
+        <div class="col-sm-12 col-md-8 offset-md-2">
+
+            <div class="my-4 py-1 text-center w-100 fs-6" *ngIf="stockSold" [style.display]="stockSold? 'block' : 'none'">
+                <ngb-alert [type]="'danger'" (closed)="closeBoughtOrSold()">{{ stockBoughtOrSoldMessage }}</ngb-alert>
+            </div>
+            <div class="my-4 py-1 text-center w-100 fs-6" *ngIf="stockBought" [style.display]="stockBought? 'block' : 'none'">
+                <ngb-alert [type]="'success'" (closed)="closeBoughtOrSold()">{{ stockBoughtOrSoldMessage }}</ngb-alert>
+            </div>
+            <h2 class="mt-4 mb-4 fs-2">My Portfolio</h2>
+            <h4 class="fs-4">Money in Wallet: ${{walletAmount | number : '1.2-2'}}</h4>
+            <div *ngIf="isPortfolioEmpty">
+                <ngb-alert [dismissible]="false" class="text-center">
+                    Currently you don't have any stock.
+                </ngb-alert>
+            </div>
+            <div *ngIf="!isPortfolioEmpty">
+                <div class="justify-content-center" [style.display]="showLoader ? 'flex': 'none'">
+                    <div class="container-fluid my-md-5 py-md-1 text-center w-75 fs-6 d-flex justify-content-center align-items-center">
+                        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                    </div>
+                </div>
+                <div class="card mb-3 mt-3" *ngFor="let data of portfolioDetails; index as i" [style.display]="showLoader ? 'none': 'block'">
+                    <div class="card-header card-h" style="cursor:pointer" [routerLink]="['/search', data.ticker]">
+                        <h3 class="fw-bold fs-5 d-inline">{{data.ticker}} </h3> 
+                        <span class="text-secondary fs-6">{{data.name}}</span>
+                    </div>
+                    <div class="card-body fs-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="d-flex justify-content-between">
+                                    <span>Quantity:</span> <span>{{this.changeNumberDisplay(data.quantity)}}</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Avg. Cost/ Share:</span> <span>{{this.changeNumberDisplay(data.costPerShare)}}</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Total Cost:</span> <span>{{this.changeNumberDisplay(data.totalCost)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="d-flex justify-content-between">
+                                    <span>Change:</span> 
+                                    <span [style.color]="getColor(data.change)">
+                                        <span>
+                                            <span [style.display]="showCaretUp(data.change)" class="caret">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                                    <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                                </svg> 
+                                            </span>
+                                            <span [style.display]="showCaretDown(data.change)" class="caret">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                        {{this.changeNumberDisplay(data.change)}}
+                                    </span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Current Price:</span> <span [style.color]="getColor(data.change)">{{this.changeNumberDisplay(data.currPrice)}}</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Market Value:</span> <span [style.color]="getColor(data.change)">{{this.changeNumberDisplay(data.marketValue)}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button type="button" (click)="openStockPurchaseModal(data, i)" style="min-width: 55px;" class="btn btn-primary mx-2 px-2">Buy</button>
+                        <button type="button" (click)="openStockSellModal(data, i)" style="min-width: 55px;" class="btn btn-danger mx-2 px-2">Sell</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

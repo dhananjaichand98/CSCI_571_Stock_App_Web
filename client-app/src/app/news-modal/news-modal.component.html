@@ -1,0 +1,33 @@
+
+<div class="modal-header d-flex">
+    <div>
+        <div class="modal-title modal-heading" id="modal-basic-title">{{newsItem.source}}</div>
+        <span class="text-secondary">{{formatDate(newsItem.datetime)}}</span>
+    </div>
+  <button type="button" class="btn-close closed-modal-button" aria-label="Close" (click)="closeModal()" style="align-self: flex-start;" ></button>
+</div>
+<div class="modal-body">
+  <div class="mb-4">
+      <div class="modal-headline">{{newsItem.headline}}</div>
+      <div class="modal-summary">{{newsItem.summary}}</div>
+      <span class="text-secondary">For more details click <a target="_blank" href="{{newsItem.url}}">here</a></span>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      Share:<br/>
+      <a class="twitter-share-button"
+        target="_blank"
+        href="{{getLinkForTwitter()}}"
+        data-size="large">
+            <fa-icon [icon]="faTwitter" style="font-size: 30px; color:#1C9BF0"></fa-icon>
+      </a>
+      <a class="twitter-share-button"
+        target="_blank"
+        style="margin-left: 10px;"
+        href="{{getLinkForFacebook()}}"
+        data-size="large">
+            <fa-icon [icon]="faFacebookSquare" style="font-size: 30px; color: #0265E0;"></fa-icon>
+      </a>
+    </div>
+  </div>
+</div>

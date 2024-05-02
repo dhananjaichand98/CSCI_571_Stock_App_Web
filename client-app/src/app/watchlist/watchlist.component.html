@@ -1,0 +1,65 @@
+
+<div class="container-fluid watchlist-container my-4 py-1 text-center">
+    <h2 class="text-start mb-4 fs-2">My Watchlist</h2>
+
+    <div class="justify-content-center" [style.display]="showLoader ? 'flex': 'none'">
+        <div class="container-fluid my-md-5 py-md-1 text-center w-75 fs-6 d-flex justify-content-center align-items-center">
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        </div>
+    </div>
+    <div *ngIf="!isEmpty" [style.display]="showLoader ? 'none': 'initial'" #watchlistrendered>
+        <div class="card mb-4" style="cursor: pointer;" *ngFor="let watchlistItem of watchlistValuesArray;" (click)="routeToSearch(watchlistItem.ticker)">
+            <div class="row d-flex ms-auto mx-0">
+                <button type="button" class="cancel-button" fill="#7E7E7E" (click)="removeItem(watchlistItem)">
+                    <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                        <path stroke="#7E7E7E" stroke-width="1.25" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="row text-end mx-0 py-2 px-4">
+                <div class="col col-6">
+                    <div class="row fw-bold fs-4 mb-2">{{watchlistItem.ticker}}</div>
+                    <div class="row text-start fs-6">{{watchlistItem.name}}</div>
+                </div>
+                <div class="col col-6 mx-0 px-md-2 mb-2">
+                    <div class="row ms-auto" [class]="priceChange(watchlistItem) == 1? 'text-success' : (priceChange(watchlistItem) == 2 ? 'text-danger' : '')  ">
+                        <div class="col flex-end px-0 fw-bold  fs-4 mb-2">
+                            {{watchlistItem.c | number : '1.2-2'}}
+                        </div>
+                        
+                    </div>
+                    <div class="row ms-auto">
+                        <div class="col flex-end px-0 fs-6 fw-bold">
+                            <span class="d-inline-flex" [class]="priceChange(watchlistItem) == 1? 'text-success' : (priceChange(watchlistItem) == 2 ? 'text-danger' : '')  ">
+                                <span *ngIf="priceChange(watchlistItem) == 1" style="display:inline-flex; align-items:center; justify-content: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                        <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                    </svg> 
+                                </span>
+
+                                <span *ngIf="priceChange(watchlistItem) == 2"  style="display:inline-flex; align-items:center; justify-content: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                    </svg>
+                                </span>
+
+                                {{watchlistItem.d | number : '1.2-2' }} ({{watchlistItem.dp| number : '1.2-2'}}%)
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isEmpty">
+        <ngb-alert [dismissible]="false" class="text-center">
+            Currently you do not have any stock in your watchlist.
+        </ngb-alert>
+    </div>
+
+    <div class="container-fluid my-md-5 py-md-1 text-center fs-6" *ngIf="isAPIResponseExeeded">
+        <ngb-alert [type]="'danger'" [dismissible]="false">{{ isAPIResponseExeededMessage }}</ngb-alert>
+    </div>
+
+</div>

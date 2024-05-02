@@ -1,0 +1,31 @@
+.modal-heading{
+    font-size: 26px;
+    font-weight: 550;
+}
+
+.modal-headline{
+    font-size: 20px;
+    font-weight: 550;
+}
+
+.closed-modal-button{
+    outline: none;
+    border: none;
+    box-shadow: none;
+    padding-top: 0;
+}
+
+.modal-summary{
+    margin-bottom: 0;
+}
+
+a{
+    color: #5095df; 
+    text-decoration: none !important;
+    font-weight: 400 !important;
+}
+
+a:hover{
+    text-decoration: underline !important;
+    color:#3671b1 !important;
+}

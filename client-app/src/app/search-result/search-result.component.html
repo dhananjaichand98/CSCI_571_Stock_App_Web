@@ -1,0 +1,261 @@
+<!-- company-profile, quotes,  -->
+<div class="container-fluid my-md-5 py-md-1 search-result-container">
+
+    <div class="mb-5 py-1 text-center w-100 fs-6" *ngIf="addedToWatchlist" [style.display]="addedToWatchlist? 'block' : 'none'">
+        <ngb-alert  (closed)="closeWatchlist()" [type]="'success'" [dismissible]="true">{{ addedOrRemovedWatchlistdMessage }}</ngb-alert>
+    </div>
+    <div class="mb-5 py-1 text-center w-100 fs-6" *ngIf="removedFromWatchlist" [style.display]="removedFromWatchlist? 'block' : 'none'">
+        <ngb-alert  (closed)="closeWatchlist()" [type]="'danger'" [dismissible]="true">{{ addedOrRemovedWatchlistdMessage }}</ngb-alert>
+    </div>
+
+    <div class="mb-5 py-1 text-center w-100 fs-6" *ngIf="stockBought" [style.display]="stockBought? 'block' : 'none'">
+        <ngb-alert (closed)="closeBoughtOrSold()" [type]="'success'" [dismissible]="true">{{ stockBoughtOrSoldMessage }}</ngb-alert>
+    </div>
+    <div class="mb-5 py-1 text-center w-100 fs-6" *ngIf="stockSold" [style.display]="stockSold? 'block' : 'none'">
+        <ngb-alert (closed)="closeBoughtOrSold()" [type]="'danger'" [dismissible]="true">{{ stockBoughtOrSoldMessage }}</ngb-alert>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col col-md-4 col-xs-5">
+            <div class="row"><div class="col"><h1 class="mb-0 fw-bold" style="font-size: 2rem; display: flex; flex-direction: row; align-items: center;">
+                {{companyProfile.ticker}}
+                
+                <button type="button" class="d-flex fav-button" *ngIf="!isFavourite" (click)="favouriteClicked()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star favorites-icon mx-2" viewBox="0 0 16 16">
+                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                    </svg>
+                </button>
+                <button type="button" class="d-flex fav-button" *ngIf="isFavourite" (click)="unFavouriteClicked()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill favorites-icon mx-2" style="fill: #FFD000" viewBox="0 0 16 16">
+                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                    </svg> 
+                </button>
+
+            </h1></div></div>
+            <div class="row my-2"><div class="col"><h2 class="mt-1 mb-0 search-details-secondry-font fw-bold" style="color: #7A838A;line-height: 1.4rem;">{{companyProfile.name}}</h2></div></div>
+            <div class="row"><div class="col my-1">{{companyProfile.exchange}}</div></div>
+
+            <div class="row mx-0 px-0"><div class="col mx-0 px-0">
+                <div class="btn-group">
+                    <button type="button" style="border-radius:.25rem !important" id="stock-buy-button" class="btn btn-success me-2" (click)="openStockPurchaseModal()">Buy</button>
+                    <button *ngIf="isStockBought()" style="border-radius:.25rem !important" type="button" id="stock-sell-button" class="btn btn-danger" (click)="openStockSellModal()">Sell</button>
+                </div>
+            </div></div>
+
+        </div>
+        <div class="col text-center" id="company-logo">
+            <img src={{companyProfile.logo}} alt="logo" class="logo-image">
+        </div>
+        <div class="col col-md-4 col-xs-5">
+            <div class="row">
+                <div class='col text-end fw-bold'>
+                    <h1 class="mb-0" style="font-size: 2rem">
+                        <span [class]="priceChange == 1? 'text-success fw-bold' : (priceChange == 2 ? 'font-red fw-bold' : 'fw-bold') ">
+                            {{quote.c | number : '1.2-2'}}
+                        </span>
+                    </h1>
+                </div>
+            </div>
+            <div class="row  my-2"><div class="col text-end">
+                <h2 class="mt-1 mb-0 search-details-secondry-font">
+                    <span style="line-height: 1rem;" [class]="priceChange == 1? 'text-success quote-dp-span fw-bold' : (priceChange == 2 ? 'font-red quote-dp-span fw-bold' : 'quote-dp-span fw-bold')">      
+                        <span *ngIf="priceChange == 1" style="display:inline-flex; align-items:center; justify-content: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="dp-caret bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                            </svg>
+                            {{quote.d| number : '1.2-2'}} 
+                        </span>
+                        <span *ngIf="priceChange == 2"  style="display:inline-flex; align-items:center; justify-content: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="dp-caret bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                            </svg>
+                            {{quote.d| number : '1.2-2'}}
+                        </span>
+                        <span *ngIf="priceChange == 0" style="display:inline-flex; align-items:center; justify-content: center;">
+                            {{quote.d| number : '1.2-2'}}
+                        </span>
+                        &nbsp;({{quote.dp| number : '1.2-2'}}%) 
+                    </span>
+                </h2>
+            </div></div>
+            
+            <div class="row"><div class="col text-end my-1">{{stockCurrentTime | date:'yyyy-mm-dd hh:mm:ss'}}</div></div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col text-center fw-bold" [style.color] = "isMarketOpen? 'green' : 'red'">
+            {{ marketMsg }}    
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <mat-tab-group mat-stretch-tabs animationDuration="0ms">
+            <mat-tab label="Summary"> 
+                <ng-template matTabContent>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <div class="row mt-4 my-5">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="row price-comp">
+                                            <div style="width:200px">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="d-inline-block price-key"><b>High Price: </b></div>
+                                                    <div class="d-inline-block">{{quote.h | number: '1.2-2'}}</div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="d-inline-block price-key"><b>Low Price: </b></div>
+                                                    <div class="d-inline-block">{{quote.l | number: '1.2-2'}}</div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="d-inline-block price-key"><b>Open Price: </b></div>
+                                                <div class="d-inline-block">{{quote.o | number: '1.2-2'}}</div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="d-inline-block price-key"><b>Prev Close: </b></div>
+                                                <div class="d-inline-block">{{quote.pc | number: '1.2-2'}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col text-center fw-bold fs-6"><u>About the company</u></div>
+                                </div>
+                                <div class="row my-4">
+                                    <div class="row mb-2"><div class="col"><span class="fw-bold">IPO Start Date:</span> {{companyProfile.ipo}}</div></div>
+                                    <div class="row mb-2"><div class="col"><span class="fw-bold">Industry:</span> {{companyProfile.finnhubIndustry}}</div></div>
+                                    <div class="row mb-2"><div class="col"><span class="fw-bold">Webpage: </span> <a [href]="companyProfile.weburl" target="_blank">{{companyProfile.weburl}}</a></div></div>
+                                    <div class="row mb-2"><div class="col"><span class="fw-bold">Company Peers: </span> 
+                                        <br>
+                                        <span *ngFor="let peer of peers; last as isLast">
+                                            <span class="span-link" (click)="peersClicked(peer)">{{peer}}<span *ngIf="!isLast">, </span></span>
+                                        </span>
+                                    </div></div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 col-xs-12 mt-2 px-0 d-flex justify-content-end float-right">
+                                <div class="px-0" style="width:100%">
+                                    <app-price-chart
+                                        [chart_data]="candle" 
+                                        [ticker]="companyProfile.ticker" 
+                                        [color]="positiveChange" 
+                                        
+                                    ></app-price-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Top News">
+                <ng-template matTabContent>
+                    <div class="row mx-0">
+                        <div class="col-sm-12 col-md-6" *ngFor="let item of news">
+                            <div class="card news-card" (click)="openNewsModal(item)">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 thumbnail-container">
+                                            <img class="thumbnail-icon" src="{{item.image}}" alt="thumbnail"/>
+                                        </div>
+                                        <div class="col-md-9 headline">
+                                            {{item.headline}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Charts"> 
+                <ng-template matTabContent>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col mt-2 px-0 d-flex justify-content-end float-right">
+                                <div class="px-0" style="width:100%">
+                                    <app-sma-volume-chart
+                                        [chartData]="candleForTwoYears" 
+                                        [ticker]="companyProfile.ticker" 
+                                        [color]="positiveChange" 
+                                    ></app-sma-volume-chart>
+                                </div>
+                            </div>        
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Insights"> 
+                <ng-template matTabContent>
+                    <h3 class="text-center my-3 fw-bold" style="color:rgb(92, 89, 89); font-size:2em">Social Sentiments</h3>
+                    <div class = "row sentiment-container mx-auto">
+                        <div class = "col">
+                            <div class = "row border-top" style="background-color:#eaecef">
+                                <div class="col col-md-8 col-6 text-center py-2 fw-bold d-flex align-items-center justify-content-center">
+                                    {{companyProfile.name}}
+                                </div>
+                                <div class="col col-md-2 col-3 text-center py-2 fw-bold d-flex align-items-center justify-content-center">
+                                    Reddit
+                                </div>
+                                <div class="col col-md-2 col-3 text-center py-2 fw-bold d-flex align-items-center justify-content-center">
+                                    Twitter
+                                </div>
+                            </div>
+                            <div class = "row border-top ">
+                                <div class="col col-md-8 col-6 text-center py-2 fw-bold  d-flex align-items-center justify-content-center" style="background-color:#eaecef">
+                                    Total Mentions
+                                </div>
+                                <div class="col col-md-2 col-3 text-center py-2 d-flex align-items-center justify-content-center">
+                                    {{ allmention.reddit.mention }}
+                                </div>
+                                <div class="col col-md-2 col-3 text-center py-2 d-flex align-items-center justify-content-center">
+                                    {{ allmention.twitter.mention }}
+                                </div>
+                            </div>
+                            <div class = "row border-top">
+                                <div class="col col-md-8 col-6 text-center py-2 fw-bold d-flex align-items-center justify-content-center" style="background-color:#eaecef">
+                                    Positive Mentions
+                                </div>
+                                <div class="col col-md-2 col-3 text-center py-2 d-flex align-items-center justify-content-center">
+                                    {{ allmention.reddit.posmention }}
+                                </div>
+                                <div class="col col-md-2 col-3 text-center py-2 d-flex align-items-center justify-content-center">
+                                    {{ allmention.twitter.posmention }}
+                                </div>
+                            </div>
+                            <div class = "row border-top border-bottom">
+                                <div class="col col-md-8 col-6 text-center py-2 fw-bold d-flex align-items-center justify-content-center" style="background-color:#eaecef">
+                                    Negative Mentions
+                                </div>
+                                <div class="col col-md-2 col-3 text-center py-2 d-flex align-items-center justify-content-center">
+                                    {{ allmention.reddit.negmention }}
+                                </div>
+                                <div class="col col-md-2 col-3 text-center py-2 d-flex align-items-center justify-content-center">
+                                    {{ allmention.twitter.negmention }}
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-4 mx-auto">
+                        <div class = "col-12 col-md-6 insights-chart">
+                            <div style="width: 100%;" class="insigths-div-chart-container">
+                                <app-recommendation-chart [chartInputData] = "recommendation"></app-recommendation-chart>
+                            </div>
+                        </div>
+                        <div class = "col-12 col-md-6 insights-chart mt-md-0 mt-xs-4">
+                            <div style="width: 100%;" class="insigths-div-chart-container">
+                                <app-earnings-chart [earningChartInputData] = "earnings"></app-earnings-chart>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+                </ng-template>
+            </mat-tab>
+        
+        </mat-tab-group>
+
+    </div>
+</div>

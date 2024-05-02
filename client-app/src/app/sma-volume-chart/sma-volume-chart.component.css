@@ -1,0 +1,12 @@
+.chart-display{
+    width: 100% !important; 
+    height: 600px; 
+    display: block; 
+    max-width: 65rem;
+}
+
+@media (max-width: 580px){
+    highcharts-chart{
+        max-width: 300px;
+    }
+}

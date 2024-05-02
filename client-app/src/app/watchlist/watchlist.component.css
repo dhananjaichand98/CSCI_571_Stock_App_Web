@@ -1,0 +1,26 @@
+
+.cancel-button {
+    all: unset;
+    cursor: pointer;
+}
+
+.cancel-button:focus {
+    outline: none;
+}
+
+
+@media (min-width: 768px) {
+    
+    .watchlist-container {
+        width: 75%;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .watchlist-container {
+        width: 100%;
+    }
+
+}

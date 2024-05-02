@@ -1,0 +1,172 @@
+.font-red{
+    color: rgb(255, 0, 0);
+}
+
+.logo-image {
+    /* max-width: 40%; */
+    max-height: 90%;
+    height: auto;
+    width: auto;
+}
+
+.favorites-icon {
+    height: 1.4rem;
+    width: auto;
+}
+
+a{
+    color: #5095df; 
+    text-decoration: none !important;
+    font-weight: 400 !important;
+}
+
+a:hover{
+    text-decoration: underline !important;
+    color:#3671b1 !important;
+}
+
+.fav-button {
+    all: unset;
+    cursor: pointer;
+}
+
+.fav-button:focus {
+    outline: none;
+}
+
+.card-body{
+    min-height: 120px;
+}
+
+.card{
+    margin: 10px;
+}
+
+.thumbnail-container{
+    padding-right: 0;
+}
+
+.headline{  
+    display: flex;
+    align-self: center;
+}
+
+.news-card:hover{
+    cursor: pointer;
+}
+
+.span-link{
+    color: #5095df;
+    text-decoration: none !important;
+    cursor: pointer;
+    font-weight: 400 !important;
+}
+
+.span-link:hover{
+    text-decoration: underline !important;
+    color:#3671b1 !important;
+}
+
+.quote-dp-span{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.price-comp{
+    margin-left: 3vw;
+    width: 100%
+}
+
+.price-key{
+    min-width: 92px
+}
+
+@media (min-width: 768px) {
+    
+    .search-result-container {
+        width: 70%;
+    }
+
+    .logo-image {
+        width: 40%;
+        height: auto;
+    }
+    
+    .search-details-secondry-font{
+        font-size: 1.5em;
+    }
+
+    .search-details-secondry-care{
+        width: 16px;
+        height: 16px;
+    }
+
+    .sentiment-container{
+        width: 60%;
+    }
+
+    
+    .thumbnail-icon{
+        height: 80px;
+        width: 100%;
+    }
+
+    .dp-caret{
+        margin-right: 5px;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    
+    .insights-chart{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10%;
+    }
+
+    .thumbnail-icon{
+        height: auto;
+    }
+
+    .logo-image {
+        width: 75%;
+        height: auto;
+    }
+
+    .search-details-secondry-font{
+        font-size: 1.05em;
+    }
+
+    .search-details-secondry-care{
+        width: 10px;
+        height: 10px;
+    }
+
+    #company-logo{
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .sentiment-container{
+        width: 90%;
+    }
+
+    .thumbnail-icon{
+        height: 200px;
+        width: 100%;
+    }
+
+    .price-comp{
+        justify-content: center;
+        margin: auto;
+        width: 65%;
+    }
+
+    .dp-caret{
+        margin-right: 0px;
+    }
+
+}

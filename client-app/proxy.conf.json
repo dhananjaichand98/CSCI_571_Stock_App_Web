@@ -1,0 +1,10 @@
+{
+    "/company":{
+        
+        "target": "https://stocks-app-angular-node.wl.r.appspot.com",
+        "secure": false,
+        "changeOrigin": true
+    }
+
+}
+

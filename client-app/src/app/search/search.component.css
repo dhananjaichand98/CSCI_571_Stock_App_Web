@@ -1,0 +1,85 @@
+/* for larger screen sizes */
+a{
+    color: #5ac7ff;
+    font-weight: 800;
+    text-decoration: none !important;
+}
+
+.disabled-field{
+    display: none;
+    pointer-events: none;
+}
+
+#stock-search-input, #stock-search-button, #stock-cancel-button{
+    border-color: #2224AB;
+    border-width: .2rem;
+}
+
+#stock-search-input{
+    border-top-left-radius: 50rem !important;
+    border-bottom-left-radius: 50rem;
+    border-right: none;
+}
+
+.form-control:focus{
+    outline: none !important;
+    box-shadow: none !important;
+    outline-style: none !important;
+    box-shadow: none !important;
+}
+
+.btn-outline-secondary:focus, .btn:focus {
+    /* outline: 0; */
+    /* box-shadow: none !important; */
+    /* outline-style: none !important; */
+    border: 2px solid #86b7fe;
+    /* box-shadow: none !important; */
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.btn-outline-secondary:hover, .btn:hover{
+    color: initial;
+    background-color: initial;
+    border-color: initial;
+}
+
+/* #stock-search-input:active, #stock-search-input:focus, #stock-search-input:hover {
+    outline: none !important;
+    box-shadow: none !important;
+    outline-style: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;  
+} */
+
+#stock-search-button{
+    border-right: none;
+    border-left: none;
+}
+
+#stock-cancel-button{
+    border-top-right-radius: 50rem;
+    border-bottom-right-radius: 50rem;
+    border-left: none;
+}
+
+@media (min-width: 768px) { 
+    .search-input{
+        width: 29%;
+    }
+
+    .stock-search-header{
+        font-weight: 600;
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) { 
+    .search-input{
+        width: 85%;
+    }
+
+    .stock-search-header{
+        font-weight: 600;
+        font-size: 2.2rem;
+    }
+}

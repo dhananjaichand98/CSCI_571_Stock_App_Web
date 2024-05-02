@@ -1,0 +1,6 @@
+.chart-display{
+    width: 100% !important; 
+    display: block; 
+    max-width: 480px; 
+    margin:auto;
+}

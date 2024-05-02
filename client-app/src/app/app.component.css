@@ -1,0 +1,64 @@
+.bg-blue {
+    background-color: #2224AB;
+}
+
+.stock-app-footer.footer{
+    background-color: #dbdcdc;
+    height:5vh;
+    color: black;
+    z-index: 10;
+    margin-top: auto;
+}
+
+.footer-link{
+    color: #5095df;
+    font-weight: 600;
+    text-decoration: none !important;
+}
+
+.footer-link:hover{
+    text-decoration: underline !important;
+    color:#3671b1 !important;
+}
+
+.stock-app-footer.a{
+    text-decoration: none;
+}
+
+@media (min-width: 768px) { 
+        
+    .nav-link.active {
+        border: 2px solid white;
+        border-radius: 12px;
+    }
+
+}
+
+@media (max-width: 768px) { 
+        
+    .nav-link.active {
+        border: 1px solid white;
+        border-radius: 12px;
+    }
+
+    .nav-link{
+        padding-right: 10px;
+        margin-top: 10px;
+    }
+
+    .search-app-nav-button{
+        display: inline-flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: flex-end;
+    }
+
+    .stock-app-footer.footer{
+        background-color: #dbdcdc;
+        height:5vh;
+        color: black;
+        z-index: 10;
+        margin-top: auto;
+    }
+
+}
